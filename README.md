@@ -2,10 +2,8 @@
 
 ## About
 
-After reading this [wonderful post](https://medium.com/leaningtech/porting-a-c-multiplayer-game-to-the-web-with-cheerp-webrtc-and-firebase-29fbbc62c5ca) by the [Cheerp team](https://leaningtech.com/pages/cheerp.html)
-I wanted to see if the same can be done with "pure" Rust using WASM.
-
-Since doing a game from scratch was too complicated as a first step I aimed to just play along with Rust, HTML (using [Yew](https://github.com/yewstack/yew)) and WebRTC by doing a chat application. 3D and WebGL will come another time.
+This is a Web-RTC chat app created in Rust.
+I wanted to see and learn WASM.
 
 ![demo](demo.gif)
 
@@ -13,18 +11,24 @@ Since doing a game from scratch was too complicated as a first step I aimed to j
 
 To build this project you need to:
 
-1. Install wasm-pack with ``cargo install wasm-pack``
+1. Add `wasm32-unknown-unknown` as a target
 
-2. Install http-server ``cargo install http-server``
+    ```bash
+        rustup target add wasm32-unknown-unknown
+    ```
+
+2. Install trunk ``cargo install trunk``
 
 To run it once build you need to type
 
-1. Compile code with ``wasm-pack build --target web --no-typescript --out-dir ./static/pkg``
+1. Compile code with ``trunk build --release``
 
-2. Run web server in the ``static`` dir with ``http-server -p 8080`` (Alternatively you can use any static file server like ``python3 -m http.server``)
+2. Run web server in the ``trunk serve``
+
+Or
+
+Simply run [scripts/build.bat](scripts/build.bat)
 
 ## Special thanks
 
-* The [Rust](https://www.rust-lang.org/) team for making a great language
-* The [Yew](https://github.com/yewstack/yew) team for making an awesome front-end framework
 * [Sajad Hashemian](https://github.com/sajadhsm?tab=repositories) for making this [nice HTML chat](https://codepen.io/sajadhsm/pen/odaBdd)
