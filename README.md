@@ -17,17 +17,15 @@ To build this project you need to:
     rustup target add wasm32-unknown-unknown
     ```
 
-2. Install trunk ``cargo install trunk``
+2. Install wasm-pack ``cargo install wasm-pack``
 
-To run it once build you need to type
+3. Install http-server ``npm install --global http-server``
 
-1. Compile code with ``trunk build --release``
-
-2. Run web server in the ``trunk serve``
+4. Run by ``http-server -p 8080``
 
 Or
 
-Simply run [scripts/build.bat](scripts/build.bat)
+Simply run [scripts/build.ps1](scripts/build.ps1)
 
 ## Special thanks
 
