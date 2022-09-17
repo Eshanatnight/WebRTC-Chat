@@ -1,0 +1,83 @@
+<html><head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <link rel="stylesheet" href="style.css"> <!-- from https://codepen.io/supah/pen/jqOBqp -->
+
+<link rel="preload" href="/web-RTC-1ae3360aca6594fa_bg.wasm" as="fetch" type="application/wasm" crossorigin="">
+<link rel="modulepreload" href="/web-RTC-1ae3360aca6594fa.js"></head>
+
+<body>
+    <!-- Note the usage of `type=module` here as this is an ES6 module -->
+    <script type="module">
+        // Use ES module import syntax to import functionality from the module
+        // that we have compiled.
+        //
+        // Note that the `default` import is an initialization function which
+        // will "boot" the module and make it ready to use. Currently browsers
+        // don't support natively imported WebAssembly as an ES module, but
+        // eventually the manual initialization won't be required!
+        import init from './pkg/part2_bis.js';
+
+        async function run() {
+            // First up we need to actually load the wasm file, so we use the
+            // default export to inform it where the wasm file is located on the
+            // server, and then we wait on the returned promise to wait for the
+            // wasm to be loaded.
+            //
+            // It may look like this: `await init('./pkg/without_a_bundler_bg.wasm');`,
+            // but there is also a handy default inside `init` function, which uses
+            // `import.meta` to locate the wasm file relatively to js file.
+            //
+            // Note that instead of a string you can also pass in any of the
+            // following things:
+            //
+            // * `WebAssembly.Module`
+            //
+            // * `ArrayBuffer`
+            //
+            // * `Response`
+            //
+            // * `Promise` which returns any of the above, e.g. `fetch("./path/to/wasm")`
+            //
+            // This gives you complete control over how the module is loaded
+            // and compiled.
+            //
+            // Also note that the promise, when resolved, yields the wasm module's
+            // exports which is the same as importing the `*_bg` module in other
+            // modes
+            await init();
+        }
+
+        run();
+    </script>
+
+    <div id="myRustApp" class="msger"></div>
+
+
+<script type="module">import init from '/web-RTC-1ae3360aca6594fa.js';init('/web-RTC-1ae3360aca6594fa_bg.wasm');</script><script>(function () {
+    var protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    var url = protocol + '//' + window.location.host + '/_trunk/ws';
+    var poll_interval = 5000;
+    var reload_upon_connect = () => {
+        window.setTimeout(
+            () => {
+                // when we successfully reconnect, we'll force a
+                // reload (since we presumably lost connection to
+                // trunk due to it being killed, so it will have
+                // rebuilt on restart)
+                var ws = new WebSocket(url);
+                ws.onopen = () => window.location.reload();
+                ws.onclose = reload_upon_connect;
+            },
+            poll_interval);
+    };
+
+    var ws = new WebSocket(url);
+    ws.onmessage = (ev) => {
+        const msg = JSON.parse(ev.data);
+        if (msg.reload) {
+            window.location.reload();
+        }
+    };
+    ws.onclose = reload_upon_connect;
+})()
+</script></body></html>
