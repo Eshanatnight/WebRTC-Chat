@@ -1,1 +1,7 @@
-/target
+.idea/
+.vs/
+
+static/pkg
+target/
+
+/node_modules
