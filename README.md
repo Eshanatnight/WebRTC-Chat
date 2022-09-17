@@ -14,7 +14,7 @@ To build this project you need to:
 1. Add `wasm32-unknown-unknown` as a target
 
     ```bash
-        rustup target add wasm32-unknown-unknown
+    rustup target add wasm32-unknown-unknown
     ```
 
 2. Install trunk ``cargo install trunk``
