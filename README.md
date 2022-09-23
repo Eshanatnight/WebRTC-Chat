@@ -19,13 +19,30 @@ To build this project you need to:
 
 2. Install wasm-pack ``cargo install wasm-pack``
 
+> This needs perl
+> on Windows
+
+```bash
+choco install StrawberryPerl
+```
+
 3. Install http-server ``npm install --global http-server``
 
-4. Run by ``http-server -p 8080``
+4. Build the project
 
-Or
+    ```bash
+    wasm-pack build --target web --no-typescript --out-dir ./static/pkg
+    ```
 
-Simply run [scripts/build.ps1](scripts/build.ps1)
+5. Run by
+
+```bash
+cd static
+http-server -p 8080
+```
+
+> npm is used to get the http-server
+
 
 ## Special thanks
 
